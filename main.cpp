@@ -1,15 +1,6 @@
 #include <iostream>
 #include <string>
-#include "./include/fmt/format.h"
 #include "./include/myGraph.hpp"
-
-namespace std {
-    using fmt::format;
-    using fmt::format_error;
-    using fmt::formatter;
-};
-
-using namespace std;
 
 int main()
 {
@@ -103,5 +94,5 @@ int main()
     for (auto item : p) {
         std::cout << " -> " << item;
     }
-    std::cout << endl;
+    std::cout << std::endl;
 }
