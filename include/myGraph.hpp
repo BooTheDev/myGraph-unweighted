@@ -17,10 +17,12 @@ public:
     // Mutators
     void addVertex(V const& v);
     void addEdge(V const& v, V const& d);
+    void addEdge(V const& v, std::initializer_list<V> const& vlist);
     void removeVertex(V const& v);
 
     // Accessors
     std::size_t size() const;
+    std::size_t getDegree(V const& v) const;
     myTree<V, _Hasher, _Eq> bfs(V const& v) const;
     myTree<V, _Hasher, _Eq> dfs(V const& v) const;
 private:
@@ -31,7 +33,7 @@ private:
     ) const;
 
 private:
-    std::unordered_map<std::reference_wrapper<V const>, myVertex<V>, _Hasher, _Eq> db;
+    std::unordered_map<V, myVertex<V>, _Hasher, _Eq> db;
 };
 
 #include "./implement/_myGraph_implement.hpp"
