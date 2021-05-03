@@ -9,8 +9,8 @@ myGraph<V, _Hasher, _Eq>::~myGraph() {
 template <typename V, typename _Hasher, typename _Eq>
 void myGraph<V, _Hasher, _Eq>::addVertex(V const& v) {
     if (!db.contains(v)) {
-        V const* tmp{ new V{v} };
-        db.emplace(*tmp, tmp);
+        auto tmp = db.emplace(v, myVertex<V>{});
+        tmp.first->second.pData = &tmp.first->first;
     }
 }
 
@@ -24,9 +24,32 @@ void myGraph<V, _Hasher, _Eq>::addEdge(V const& v, V const& d) {
 }
 
 template <typename V, typename _Hasher, typename _Eq>
+void myGraph<V, _Hasher, _Eq>::addEdge(V const& v, std::initializer_list<V> const& vlist) {
+    for (auto&& item : vlist)
+        this->addEdge(v, item);
+}
+
+template <typename V, typename _Hasher, typename _Eq>
 void myGraph<V, _Hasher, _Eq>::removeVertex(V const& v) {
     db.erase(v);
 }
+
+
+template <typename V, typename _Hasher, typename _Eq>
+std::size_t myGraph<V, _Hasher, _Eq>::size() const {
+    return db.size();
+}
+
+template <typename V, typename _Hasher, typename _Eq>
+std::size_t myGraph<V, _Hasher, _Eq>::getDegree(V const& v) const {
+    auto vLookup = db.find(v);
+    if (vLookup == db.end())
+        throw std::invalid_argument{"can't find the vertex"};
+
+    return vLookup->second.pNeighbors.size();
+}
+
+
 
 template <typename V, typename _Hasher, typename _Eq>
 myTree<V, _Hasher, _Eq> myGraph<V, _Hasher, _Eq>::bfs(V const& v) const {

@@ -5,7 +5,7 @@ template <typename V, typename _Hasher, typename _Eq>
 myTree<V, _Hasher, _Eq>::myTree(
     myVertex<V> const* root_in,
     std::unordered_map<myVertex<V>*, myVertex<V>*> relative_in,
-    std::unordered_map<std::reference_wrapper<V const>, myVertex<V>, _Hasher, _Eq> const& db_in
+    std::unordered_map<V, myVertex<V>, _Hasher, _Eq> const& db_in
 )
     : root{root_in}, relative{relative_in}, db{db_in}
 {}
